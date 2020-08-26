@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container">
+            <button type="button" onclick="search()">Click</button>
+            <input type="text" id="search" placeholder="Enter Cafe Name">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cafe Name</th>
+                        <th>Cafe Location id</th>
+                        <th>Cafe Lat</th>
+                        <th>Cafe Long</th>
+                        <th>Cafe street_no</th>
+
+                    </tr>
+                </thead>
+                <tbody id="data">
+
+                </tbody>
+            </table>
+        </div>
+        <script>
+  function search(){
+      var str=document.getElementById('search').value;
+      fetch('https://raw.githubusercontent.com/debojyoti/places-fake-rest-api/master/cafes.json').then(
+          res=>{
+              res.json().then(
+                  data=>{
+                      console.log(data);
+                      data.cafes.forEach((plc)=>{
+                         
+                            var filteredData=(data.cafes.filter(cafe=> data.cafe.name.toLowerCase().includes(str.toLowerCase())));
+                            
+       var result=[{name:String,street_no:String,locality:String,postal_code:String,lat:String,long:String}];
+        
+        
+        for(i=0;i<filteredData.length;i++){
+       for(let place of places){
+           if(filteredData[i].place_id==place.id){
+             
+               for(let resul  of result ){
+               resul.name=filteredData[i].name;
+                resul.street_no=place.street_no;
+                resul.locality=place.locality;
+                resul.postal_code=place.postal_code;
+                resul.lat=place.lat;
+                resul.long=place.long;
+               
+                
+           }
+       }
+    }
+    for(let resul  of result ){
+    console.log(resul);
+}
+ 
+}
+                               fetch('https://raw.githubusercontent.com/debojyoti/places-fake-rest-api/master/places.json').then(
+  res=>{
+        res.json().then(
+          data1=>{
+              console.log(data1);
+              
+                var temp="";
+               
+
+                data1.places.forEach((dt)=>{
+                    
+                  temp+="<tr>";
+                  temp+="<td>"+dt.name+"<td>";
+                  temp+="<td>"+dt.location_id+"<td>";
+                    temp+="<td>"+dt.log+"<td>";
+                        temp+="<td>"+dt.lat+"<td>";
+                            temp+="<td>"+dt.street_no+"<td>";
+                })
+                document.getElementById("data").innerHTML=temp;
+              
+          }
+        )
+  }
+)
+                              
+                          }
+                    
+                  
+              )
+          }
+      
+  
+
+/*
+        fetch('https://raw.githubusercontent.com/debojyoti/places-fake-rest-api/master/cafes.json').then(
+  res=>{
+        res.json().then(
+          data=>{
+              console.log(data);
+              
+                var temp="";
+               
+
+                data.cafes.forEach((dt)=>{
+                    
+                  temp+="<tr>";
+                  temp+="<td>"+dt.name+"<td>";
+                  temp+="<td>"+dt.location_id+"<td>";
+                })
+                document.getElementById("data").innerHTML=temp;
+              
+          }
+        )
+  }
+)
+*/
+</script>
+    </body>
+</html>
